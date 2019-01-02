@@ -1,0 +1,11 @@
+{% extends 'Restaurant_menagment/base.html' %}
+{% block content %}
+<body>
+<ul>
+    {% for order in orders %}
+    <li>Nr zam:{{ order.id }} stolik:{{ order.table }}<a href="/served/{{ order.id }}"><button>Wydaj</button></a> </li>
+    {% endfor %}
+</ul>
+
+</body>
+{% endblock %}

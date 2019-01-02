@@ -1,0 +1,50 @@
+{% extends 'Restaurant_menagment/base.html' %}
+{% block content %}
+<body>
+<a href="/table_details/{{ table.number }}"class="btn btn-success">Wróć do stolika</a>
+<h3>Lista zamówień stolik nr:{{ table.number }}</h3>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="col">Nr. zam</th>
+        <th scope="col">Szczegóły</th>
+        <th scope="col">Suma</th>
+        <th scope="col">Rachunek</th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for order in orders %}
+        <tr>
+            <td scope="row">{{ order.id }}</td>
+            <td>
+                <ul>
+                    {% for dish in order.dish_set.all %}
+                        <li>{{ dish.meal_name }}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+            <td>
+                {% for val, key in partSume.items %}
+                    {% if val == order.id %}
+                        {{ key }}
+                    {% endif %}
+                {% endfor %}
+            </td>
+            <td>
+                <a href="/pdf/{{ order.id }}" class="btn btn-success">
+                    <i class="fas fa-file-pdf fa-4x"></i> Generuj</a>
+            </td>
+            <td>
+                <form method="post" action="/payed/{{ order.id }}">
+                    {% csrf_token %}
+                    <button class="btn btn-success" formmethod="post" type="submit"><i
+                            class="fas fa-cash-register fa-4x"></i> Zapłacono
+                    </button>
+                </form>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

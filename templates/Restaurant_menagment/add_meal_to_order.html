@@ -1,0 +1,66 @@
+{% extends 'Restaurant_menagment/base.html' %}}
+{% block content %}
+
+<h3>Zamówienie nr:{{ order.id }}</h3>
+<h4>Stolik nr: {{ order.table.number }}</h4>
+<div class="menu-body">
+    <!-- Section starts: Appetizers -->
+    <div class="menu-section">
+        {% for category in categories %}
+            <h2 class="menu-section-title">{{ category.category }}</h2>
+            <!-- Item starts -->
+            {% for dish in dishes %}
+                {% if dish.category_id == category.id %}
+                    <div class="menu-item">
+                    <div class="menu-item-name">
+                        <form method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="dish" value="{{ dish.id }}">{{ dish.meal_name }}
+                            <button type="submit">Dodaj</button>
+                        </form>
+                    </div>
+                    <div class="menu-item-price">
+                        {{ dish.price }} zł
+                    </div>
+                    <div class="menu-item-description">
+                        {{ dish.description }}
+                    </div>
+
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+        </div>
+
+        <p>Aktualnie w zamówieniu</p>
+        <ul>
+            {% for dish in order.dish_set.all %}
+                <li>{{ dish.meal_name }}</li>
+            {% empty %}
+                <p>Dodaj danie</p>
+            {% endfor %}
+        </ul>
+        <br>
+        <p>Uwagi do zamówienia</p>
+        <ul>
+            {% for comment in comments %}
+                <li>{{ comment }}</li>
+            {% empty %}
+                <p>brak uwag</p>
+            {% endfor %}
+        </ul>
+        <br>
+        <form method="post">
+            {% csrf_token %}
+            <div>
+                <label>uwagi do zamówienia</label><br>
+                <input type="text" name="comment">
+                <button type="submit">Dodaj</button>
+            </div>
+        </form>
+        <a href="/table_list">
+            <button>Zakończ</button>
+        </a>
+        <a href=/order/delete/{{ order.pk }}>
+            <button>anuluj</button>
+        </a>
+{% endblock %}

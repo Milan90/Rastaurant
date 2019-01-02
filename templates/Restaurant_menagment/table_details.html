@@ -1,0 +1,39 @@
+{% extends 'Restaurant_menagment/base.html' %}
+{% block content %}
+
+<div>
+    <ol>
+        {% for order in table.orders_set.all %}
+            {% if not order.archive %}
+                <li>Nr zamówienia:{{ order.id }} Status: {{ order.get_status_display }}
+                    <a href="/order/edit/{{ order.pk }}">
+                        edytuj
+                    </a>
+                    <a href="/order/delete/{{ order.pk }}">
+                        usuń
+                    </a>
+                </li>
+            {% endif %}
+            <ul>
+                {% for dish in order.dish_set.all %}
+                    {% if not order.archive %}
+                        <li>Nazwa dania:{{ dish.meal_name }} Cena:{{ dish.price }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        {% endfor %}
+    </ol>
+    <a href="/add_order/{{ table.number }}">
+        <button>Dodaj zamówienie</button>
+    </a>
+    <a href="/bill/{{ table.id }}">
+        <button>Wystaw rachunek</button>
+    </a>
+    <a href="/edit/table/{{ table.pk }}">
+        <button>Edytuj stolik</button>
+    </a>
+    <a href="/delete/table/{{ table.pk }}">
+        <button>Usuń stolik</button>
+    </a>
+</div>
+{% endblock %}

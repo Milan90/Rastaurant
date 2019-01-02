@@ -1,0 +1,16 @@
+{% extends 'Restaurant_menagment/base.html' %}
+{% block content %}
+    <div>
+        {% for table in object_list %}
+            <a href="table_details/{{ table.number }}">
+                <div class="box-left"> <i class="fas fa-utensils fa-5x"></i><br>stolik nr:{{ table.number }}</div>
+                <!--<input type="checkbox" name="dostępny" disabled readonly {% if table.available %}
+                 checked {% endif %}> -->
+            </a>
+        {% endfor %}
+    </div>
+    <a href="/create/table">
+        <button class="btn btn-primary"><i class="fas fa-plus-square fa-4x"></i><br>Dodaj stolik</button>
+    </a>
+
+{% endblock %}

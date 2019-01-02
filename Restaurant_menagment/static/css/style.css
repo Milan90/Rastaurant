@@ -1,0 +1,26 @@
+body {
+    background-color: burlywood;
+}
+
+<!--
+-skalowanie obrazków
+
+-->
+
+table img {
+    height: 20vh;
+}
+
+.table tbody tr:hover > td {
+    background-color: chartreuse;
+
+}
+
+.table tbody tr td {
+    transition: background-color 1s ease-out;
+}
+
+.box-left {
+    display: inline-block;
+    margin: 50px;
+}

@@ -1,0 +1,23 @@
+{% extends 'Restaurant_menagment/base.html' %}}
+{% block content %}
+<div>
+    <form method="post">
+        {% csrf_token %}
+        <h4>Szczegóły zamówienia</h4>
+        <ol>
+            {% for dish in order.dish_set.all %}
+                <li>{{ dish.meal_name }}</li>
+            {% endfor %}
+        </ol>
+        <h4>Uwagi do zamówienia</h4>
+        <ol>
+            {% for comment in order.comments_set.all %}
+                <li>{{ comment }}</li>
+            {% empty %}
+            {% endfor %}
+        </ol>
+        <input type="submit" value="Gotowe do wydania">
+    </form>
+    <a class="dropdown-item" href="/orders_in_progres"><button>W realizacji</button></a>
+</div>
+{% endblock %}

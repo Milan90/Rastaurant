@@ -1,0 +1,32 @@
+{% extends 'Restaurant_menagment/base.html' %}
+{% block content %}
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Order #</th>
+            <th scope="col">Nr stolika</th>
+            <th scope="col">Status</th>
+            <th scope="col">Data przyjęcia</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for order in orders %}
+            <tr>
+                <td scope="row">{{ order.id }}</td>
+                <td>{{ order.table }}</td>
+                <td>{{ order.get_status_display }}</td>
+                <td>{{ order.created }}</td>
+                <td><a href="/order_details/{{ order.id }}"class="btn btn-success"> szczegóły </a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+<ul>
+    {% for order in orders %}
+        <li><a href="/order_details/{{ order.id }}"> {{ order.details }}, {{ order.get_status_display }} </a></li>
+    {% endfor %}
+</ul>
+</body>
+</html>
